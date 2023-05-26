@@ -1,15 +1,15 @@
 const mongoose = require("mongoose");
-const url = "mongodb://127.0.0.1:27017/mydatabase";
+const { MONGODB_URL } = require("../constants");
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(url, {
+    await mongoose.connect(MONGODB_URL, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log("Connected to the database");
+    console.log("connected to the database");
   } catch (error) {
-    console.error("Error connecting to the database:", error);
+    console.error("error connecting to the database:", error);
   }
 };
 
