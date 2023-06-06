@@ -3,6 +3,8 @@ const static = require("koa-static");
 const path = require("path");
 const mount = require("koa-mount");
 const { koaBody } = require("koa-body");
+const views = require("koa-views");
+const socket = require("socket.io");
 const {
   errorMiddleware,
   corsMiddleware,
@@ -30,6 +32,9 @@ app.use(
   })
 );
 
+/**模板文件 */
+app.use(views(path.join(__dirname, "/static"), { extension: "html" }));
+
 /**注册路由 */
 const router = require("./router");
 app.use(router.routes(), router.allowedMethods());
@@ -41,6 +46,12 @@ app.use(mount("/static", static(path.join(__dirname + "/static"))));
 connectDB();
 
 /**服务启动 */
-app.listen(3000, (a) => {
+const server = app.listen(3000, (a) => {
   console.log("server run http://localhost:3000");
+});
+
+/**sokect.io即时通讯 */
+const io = socket(server, { cors: true });
+io.on("connection", (socket) => {
+  console.log("有人上线了...");
 });

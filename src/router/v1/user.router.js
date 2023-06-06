@@ -1,11 +1,18 @@
 const Router = require("koa-router");
 const router = new Router();
-const { userInsert } = require("../../service/user.service");
+const { userInsert, userLogin } = require("../../service/user.service");
 
 router.prefix("/user");
 
 /**
- * 查询用户
+ * 预览界面
+ */
+router.get("/index", async (ctx) => {
+  return ctx.render("index");
+});
+
+/**
+ * 查询单个用户详细信息
  */
 router.get("/:id", async (ctx, next) => {
   ctx.success(ctx.params);
@@ -14,7 +21,7 @@ router.get("/:id", async (ctx, next) => {
 /**
  * 查询所有用户
  */
-router.get("/", async (ctx, next) => {
+router.get("/list", async (ctx, next) => {
   // const users = await collection.findOne({ name: "John Doe1" });
   // ctx.success(users);
   // const user = new User({});
@@ -28,6 +35,13 @@ router.get("/", async (ctx, next) => {
  */
 router.post("/", async (ctx, next) => {
   await userInsert(ctx, next);
+});
+
+/**
+ * 登录
+ */
+router.post("/login", async (ctx, next) => {
+  await userLogin(ctx, next);
 });
 
 /**

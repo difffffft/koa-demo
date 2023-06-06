@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <h1>{{message}}</h1>
+    </div>
+  </body>
+  <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script>
+    const { createApp } = Vue;
+    const socket = io("http://localhost:3000");
+    const app = createApp({
+      data() {
+        return {
+          message: "Hello Vue!",
+        };
+      },
+      mounted() {
+        socket.on("connect", () => {
+          this.message = "连接成功";
+        });
+      },
+    });
+    app.mount("#app");
+  </script>
+</html>

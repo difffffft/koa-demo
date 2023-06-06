@@ -9,6 +9,13 @@ const userSchema = new mongoose.Schema({
     default: "",
   },
   /**
+   * 用户手机号
+   */
+  phone: {
+    type: String,
+    default: "",
+  },
+  /**
    * 用户密码
    */
   password: {
@@ -23,11 +30,19 @@ const userSchema = new mongoose.Schema({
     default: "xxxx",
   },
   /**
-   *
+   * 年龄
    */
   age: {
     type: Number,
     default: null,
+  },
+
+  /**
+   * 是否被禁用
+   */
+  disable: {
+    type: Boolean,
+    default: false,
   },
 });
 const User = mongoose.model("user", userSchema);
